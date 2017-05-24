@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<head>
+	
+<script id="shader-vs" type="x-shader/x-vertex">
+attribute vec4 aPosition;
+attribute vec2 aTextureCoord;
+
+uniform mat4 uPMatrix;
+uniform mat4 uVMatrix;
+uniform mat4 uMMatrix;
+
+varying vec2 vTextureCoord;
+
+void main(){
+	gl_Position = uPMatrix * uVMatrix * uMMatrix * aPosition;
+	vTextureCoord = aTextureCoord;
+}
+</script>
+<script id="shader-fs" type="x-shader/x-fragment">
+precision mediump float;
+
+uniform sampler2D uSampler;
+uniform vec3 uColor;
+
+varying vec2 vTextureCoord;
+
+void main(){
+	
+	vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+	gl_FragColor = textureColor * vec4( 1.0);
+}
+</script>
+<style type="text/css"
+   src ="cv.css ">
+</style>
+	
+	
+	<script type="text/javascript" src = "lib/glMatrix-0.9.5.min.js"></script>
+        <script type="text/javascript" src = "lib/cuon-matrix.js"></script>
+	<script type="text/javascript" src = "lib/three.js"></script>
+
+</head>
+<body onload="main();">
+	<canvas id="webgl" width="500" height="500" style="position: absolute; z-index: 0"></canvas>
+	<canvas id="hud" width="500" height="500" style="position: absolute; z-index: 1"></canvas>
+  <div id="world">heloo...</div>
+<script type="text/javascript" src = "java.js"></script>
+
+	
+</body>
+</html>
